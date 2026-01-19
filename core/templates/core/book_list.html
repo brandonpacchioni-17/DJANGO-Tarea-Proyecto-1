@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -10,12 +10,32 @@
     <ul>
       {% for item in books_with_status %}
       <li>
-        {{ item.book.title }} - {{ item.book.author }} {% if item.loan %}
-        (Prestado)
-        <a href="{% url 'return_book' item.book.id %}">Devolver</a>
-        {% else %} (Disponible)
-        <a href="{% url 'borrow_book' item.book.id %}">Prestar</a>
+        <strong>{{ item.book.title }}</strong> - {{ item.book.author }}
+
+        {% if item.loan %}
+          (Prestado)
+          <a href="{% url 'return_book' item.book.id %}">Devolver</a>
+        {% else %}
+          (Disponible)
+          <a href="{% url 'borrow_book' item.book.id %}">Prestar</a>
         {% endif %}
+
+        <h4>Reseñas:</h4>
+
+        {% with item.book.review_set.all as book_reviews %}
+          {% if book_reviews %}
+            {% for review in book_reviews %}
+              <p>
+                ⭐ {{ review.rating }}/5 <br />
+                {{ review.comment }} <br />
+                <small>— {{ review.user.username }}</small>
+              </p>
+            {% endfor %}
+          {% else %}
+            <p>No hay reseñas.</p>
+          {% endif %}
+        {% endwith %}
+
       </li>
       {% endfor %}
     </ul>

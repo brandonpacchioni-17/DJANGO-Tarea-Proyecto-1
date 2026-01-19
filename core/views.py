@@ -4,10 +4,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Book, Loan
 from .models import Review
-
+from .models import Book, Loan, Review
 
 def book_list(request):
     books = Book.objects.all()
+    reviews = Review.objects.select_related('user', 'book')
 
     books_with_status = []
     for book in books:
