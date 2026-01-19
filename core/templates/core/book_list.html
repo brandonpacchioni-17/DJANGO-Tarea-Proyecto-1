@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Biblioteca</title>
+  </head>
+  <body>
+    <h1>Lista de Libros</h1>
+
+    <ul>
+      {% for item in books_with_status %}
+      <li>
+        {{ item.book.title }} - {{ item.book.author }} {% if item.loan %}
+        (Prestado)
+        <a href="{% url 'return_book' item.book.id %}">Devolver</a>
+        {% else %} (Disponible)
+        <a href="{% url 'borrow_book' item.book.id %}">Prestar</a>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

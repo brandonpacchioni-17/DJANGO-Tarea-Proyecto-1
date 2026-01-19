@@ -1,0 +1,32 @@
+<h1>Historial de Préstamos</h1>
+
+{% if loans %} {% for loan in loans %}
+<p><strong>{{ loan.book.title }}</strong></p>
+
+<p>
+  Prestado:
+  <span class="local-time" data-time="{{ loan.loan_date|date:'c' }}"></span>
+</p>
+
+{% if loan.return_date %}
+<p>
+  Devuelto:
+  <span class="local-time" data-time="{{ loan.return_date|date:'c' }}"></span>
+</p>
+{% else %}
+<p>Aún prestado</p>
+{% endif %}
+
+<hr />
+{% endfor %} {% else %}
+<p>No hay préstamos registrados.</p>
+{% endif %}
+
+<script>
+  document.querySelectorAll(".local-time").forEach((el) => {
+    const date = new Date(el.dataset.time);
+    el.textContent = date.toLocaleString();
+  });
+</script>
+
+<a href="{% url 'book_list' %}">Volver</a>
