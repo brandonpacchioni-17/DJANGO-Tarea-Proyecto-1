@@ -3,14 +3,13 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
-# Create your models here.
-
-class Author (models.Model):
+class Author(models.Model):
     name = models.CharField(max_length=100)
-
 
     def __str__(self):
         return self.name
+
+
 class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
@@ -29,6 +28,8 @@ class Loan(models.Model):
 
     def __str__(self):
         return f"{self.book.title} - {self.user.username}"
+
+
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
@@ -38,6 +39,3 @@ class Review(models.Model):
 
     def __str__(self):
         return f"{self.book.title} - {self.user.username} ({self.rating}/5)"
-
-        
-    

@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Book, Loan
+from .models import Review
 
 
 def book_list(request):
@@ -64,3 +65,24 @@ def return_book(request, book_id):
 def loan_history(request):
     loans = Loan.objects.filter(user=request.user).order_by('-loan_date')
     return render(request, 'core/loan_history.html', {'loans': loans})
+
+
+@login_required
+def add_review(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        comment = request.POST.get('comment')
+
+        Review.objects.create(
+            user=request.user,
+            book=book,
+            rating=rating,
+            comment=comment
+        )
+
+        messages.success(request, "Reseña agregada correctamente")
+        return redirect('book_list')
+
+    return render(request, 'core/add_review.html', {'book': book})

@@ -1,0 +1,19 @@
+<h1>Lista de libros</h1>
+
+{% for book in books %}
+<hr />
+<h2>{{ book.title }}</h2>
+<p>Autor: {{ book.author }}</p>
+
+<a href="{% url 'add_review' book.id %}">Agregar reseña</a>
+
+<h3>Reseñas:</h3>
+
+{% for review in book.reviews.all %}
+<p>
+  ⭐ {{ review.rating }}/5 <br />
+  {{ review.comment }}
+</p>
+{% empty %}
+<p>No hay reseñas aún.</p>
+{% endfor %} {% endfor %}
