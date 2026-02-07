@@ -14,7 +14,7 @@ Panel de administración con Django Admin
 
 - Acceso admin (usuario de prueba)
 
-Usuario: AdminPrueba
+Usuario: adminprueba
 
 Contraseña: admin123
 
